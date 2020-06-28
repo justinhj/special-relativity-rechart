@@ -1,3 +1,41 @@
+# Special Relativity Rechart
+
+Using React and Rechart to visualize special relativity
+
+## Special Relativity
+
+The idea for this small project came to me after completing this Coursera course, which is an introduction to Einstein's Special theory of Relativity.
+
+https://www.coursera.org/learn/einstein-relativity
+
+To visualise relativistic effects you can plot the movement of a moving body on a diagram with the vertical axis representing time and the horizontal axis representing distance. A body moving in the positive X direction will plot a line moving up and to the right.
+
+Using some equations known as the Lorentz Transformation Equations, we can plot the movement of a second body on the same diagram. When bodies are moving relative to each other at speeds close to the speed of light (c), the second body will have skewed axes.
+
+Lorentz Transform looks like this...
+
+Alice is at a particular point in space (xA) and time (tA), then we can calculate ...
+
+## Plotting the graph
+
+Rechart was chosen for this project because it works well with React which I chose as it is a good framework for building interaction web applications. Rechart also makes it easy to do things like put 4 axes on the same diagram and skew them to any orientation.
+
+## Libraries and project setup details
+
+This project was built using React, Typescript and fp-ts
+
+Created with `npx create-react-app special-relativity-rechart --typescript`
+
+## Additional libraries
+
+`npm install fp-ts`
+`npm install recharts`
+`npm install @types/recharts`
+`npm install @types/react`
+`npm install @types/react-dom`
+
+## Create React App details
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
