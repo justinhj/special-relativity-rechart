@@ -2,20 +2,20 @@ import React, {Component} from 'react';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 import './EinsteinGraphComponent.css'
 
-const data = [{x: 0, t: 0},
-    {x: 1, t: 1},
-    {x: 2, t: 2},
-    {x: 3, t: 3},
-    {x: 4, t: 4}]
+const data = [{ax: 0, at: 0},
+    {ax: 1, at: 1},
+    {ax: 2, at: 2},
+    {ax: 3, at: 3},
+    {ax: 4, at: 4}]
 
 const renderLineChart = (
     <LineChart width={800} height={480} data={data}
               margin={{top: 5, right: 30, left: 20, bottom: 5}}>
-         <XAxis dataKey="x"/>
-         <YAxis dataKey="t"/>
+         <XAxis dataKey="ax"/>
+         <YAxis dataKey="at"/>
          {/* <Tooltip/> */}
          <Legend />
-         <Line type="monotone" dataKey="x" stroke="#82ca9d" />
+         <Line type="monotone" dataKey="ax" stroke="#82ca9d" />
          <CartesianGrid />
         </LineChart>
       );
@@ -41,7 +41,7 @@ class EinsteinGraphComponent extends React.Component<{}, any> {
 
     render() {
         return (<div className="comptext">
-               <h4>Alice and Bob spacetime diagrams</h4>
+               <h4>Alice and Bob spacetime diagram</h4>
                 <form onSubmit={(event) => {
                         console.log("submiitteed");
                         event.preventDefault();
