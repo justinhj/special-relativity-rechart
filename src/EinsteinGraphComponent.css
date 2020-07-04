@@ -2,3 +2,27 @@
   background-color: #333333;
   font: x-large;
 }
+
+.horizontal-slider {
+  width: 100%;
+  /*max-width: 500px;*/
+  height: 50px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: grey;
+  /* border-image: initial; */
+}
+
+.horizontal-slider .track {
+  top: 20px;
+  height: 10px;
+  background-color: grey;
+}
+
+.horizontal-slider .thumb {
+  top: 1px;
+  width: 50px;
+  height: 48px;
+  line-height: 38px;
+  background-color: darkgray;
+}
