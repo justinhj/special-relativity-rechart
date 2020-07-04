@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend } from 'recharts';
+import { ScatterChart, Line, Scatter, CartesianGrid, XAxis, YAxis, Polygon, Tooltip, Legend } from 'recharts';
 import './EinsteinGraphComponent.css'
 
 // A position in one-dimensional space and time
@@ -30,7 +30,7 @@ function lorentzFactor(v: number) {
 }
 
 function xb(xa: number, ta: number, v: number, gamma: number) {
-    return gamma * (xa - (v * ta));
+    return gamma * (xa - (-v * ta));
 }
 
 function tb(xa: number, ta: number, v: number, gamma: number) {
@@ -46,25 +46,35 @@ class EinsteinGraphComponent extends React.Component<{}, any> {
                 ({alice: value, bob: value})
         );
 
+        const bobsPoints: Pos [] = [];
+        const alicesPoints: Pos [] = [];
+
         this.state = {
             v: 0.89,
             data: data,
-            gamma: 1.0
+            gamma: 1.0,
+            alicesPoints: alicesPoints,
+            bobsPoints: bobsPoints,
         };
+
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     renderLineChart() {
-        return <LineChart width={800} height={480} data={this.state.data}
+        return <ScatterChart width={800} height={480} data={this.state.data}
                   margin={{top: 5, right: 30, left: 20, bottom: 5}}>
-             <XAxis dataKey="alice.x"/>
-             <YAxis/>
-             <Legend verticalAlign="bottom" height={36}/>
-             <Line type="monotone" dataKey="alice.t" stroke="#82ca9d" />
-             <Line type="monotone" dataKey="bob.t" stroke="#ffffff" />
+             <XAxis type='number' dataKey="x" interval={0} xAxisId="0" domain={[-4.0, 4.0]}/>
+             {/* <XAxis type='number' dataKey="bob.x" interval={0} xAxisId="1"/> */}
+             <YAxis interval={0} dataKey="y" domain={[0.0,8.0]}/>
+             {/* <Legend verticalAlign="bottom" height={36}/> */}
+             {/* <Line dataKey="alice.t" stroke="#00ff00" xAxisId="0"/> */}
+             {/* <Line type="monotone" dataKey="bob.t" stroke="#ffffff" xAxisId="0"/> */}
+             {/* <Tooltip /> */}
              <CartesianGrid />
-            </LineChart>
+             <Scatter name="Alice" data={this.state.alicesPoints} fill="#00ff00" line shape='circle'/>
+             <Scatter name="Bob" data={this.state.bobsPoints} fill="#0000ff" line shape='circle'/>
+            </ScatterChart>
     };
 
     handleChange(event: any) {
@@ -87,7 +97,21 @@ class EinsteinGraphComponent extends React.Component<{}, any> {
             }
         );
 
-        this.setState({data: newData});
+        const newBobsPoints: Pos [] = this.state.data.slice().map(
+            (pairPos: any) => {
+                return  {x: xb(pairPos.alice.x, pairPos.alice.t, this.state.v, this.state.gamma),
+                         y: tb(pairPos.alice.x, pairPos.alice.t, this.state.v, this.state.gamma)};
+            });
+        console.log(JSON.stringify(newBobsPoints));
+
+        const newAlicesPoints: Pos [] = this.state.data.slice().map(
+            (pairPos: any) => {
+                return  {x: pairPos.alice.x,
+                         y: pairPos.alice.t};
+            });
+        console.log(JSON.stringify(newAlicesPoints));
+
+        this.setState({data: newData, bobsPoints: newBobsPoints, alicesPoints: newAlicesPoints});
         event.preventDefault();
     }
 
